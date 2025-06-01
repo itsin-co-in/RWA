@@ -1418,7 +1418,7 @@ app.get("/admin/complaints/stats", async (req, res) => {
 // [Include all your other existing routes exactly as you have them...]
 
 // ✅ Start Server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 3000;
 
 // Get local IP for development
 const getLocalIp = () => {
