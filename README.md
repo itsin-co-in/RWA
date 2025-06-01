@@ -1,8 +1,8 @@
-# Resident Welfare Web App
+# KiTS MM2 Resident Welfare Association Management Web App
 
 ## Overview
 
-The **Resident Welfare Web App** is a full-stack web application designed to improve the quality of life within residential communities. This platform allows residents and administrators to manage various community services, including registration, payments, communication through a community forum, and more. The app features notifications, complaint tracking, and email communication, providing an efficient and organized way to manage a community.
+The **KiTS RWAM Web App** is a full-stack web application designed to improve the quality of life within residential communities. This platform allows residents and administrators to manage various community services, including registration, payments, communication through a community forum, and more. The app features notifications, complaint tracking, and email communication, providing an efficient and organized way to manage a community.
 
 This project is ideal for residential societies, gated communities, or any housing complex that needs a robust system for everyday community management.
 
