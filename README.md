@@ -1,4 +1,4 @@
-# Resident Welfare Web App
+# KiTS Resident Welfare Association Management Web App
 
 ## Overview
 
