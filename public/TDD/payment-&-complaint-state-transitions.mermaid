@@ -1,0 +1,33 @@
+stateDiagram-v2
+    subgraph "Payment Lifecycle"
+        [*] --> PaymentCreated : Admin creates payment
+        PaymentCreated --> Pending : Set initial status
+        Pending --> Completed : User processes payment
+        Pending --> Failed : Payment processing fails
+        Failed --> Pending : Retry payment
+        Completed --> [*] : Payment finalized
+        
+        Pending : status = "Pending"
+        Pending : Sends reminder emails
+        Completed : status = "Completed"
+        Completed : Sends receipt email
+        Failed : status = "Failed"
+        Failed : Sends failure notification
+    end
+    
+    subgraph "Complaint Lifecycle"
+        [*] --> ComplaintSubmitted : User submits complaint
+        ComplaintSubmitted --> ComplaintPending : Set initial status
+        ComplaintPending --> InProgress : Admin starts review
+        ComplaintPending --> Resolved : Quick resolution
+        InProgress --> Resolved : Admin resolves issue
+        InProgress --> ComplaintPending : Needs more info
+        Resolved --> [*] : Complaint closed
+        
+        ComplaintPending : status = "Pending"
+        ComplaintPending : Notifies admins
+        InProgress : status = "In Progress"
+        InProgress : User gets updates
+        Resolved : status = "Resolved"
+        Resolved : Final notification sent
+    end

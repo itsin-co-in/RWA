@@ -1,0 +1,92 @@
+graph TB
+    subgraph "Client Tier"
+        WEB["Web Browser\n(HTML5, CSS3, JavaScript)"]
+        MOBILE["Mobile Browser\n(Responsive Design)"]
+    end
+    
+    subgraph "Load Balancer"
+        LB["Load Balancer\n(Optional)"]
+    end
+    
+    subgraph "Application Tier"
+        subgraph "Express.js Server (Port 3000)"
+            API["REST API Server\n(Express.js + Node.js)"]
+            MW_CORS["CORS Middleware"]
+            MW_BODY["Body Parser"]
+            MW_STATIC["Static File Server"]
+        end
+        
+        subgraph "Business Logic"
+            AUTH["Authentication Service"]
+            COMMUNITY["Community Service"]
+            PAYMENT["Payment Service"]
+            COMPLAINT["Complaint Service"]
+            NOTIFICATION["Notification Service"]
+        end
+        
+        subgraph "Email System"
+            EMAIL["Email Service\n(Nodemailer)"]
+            QUEUE["Email Queue\n(In-Memory Array)"]
+            PROCESSOR["Queue Processor\n(Async)"]
+        end
+    end
+    
+    subgraph "Data Tier"
+        subgraph "Database"
+            DB["MySQL Database\n(realp_db)"]
+            POOL["Connection Pool\n(mysql2, Limit: 10)"]
+        end
+        
+        subgraph "File System"
+            STATIC["Static Assets\n(HTML, CSS, JS)"]
+        end
+    end
+    
+    subgraph "External Services"
+        SMTP["Gmail SMTP\n(smtp.gmail.com:465)"]
+        ENV["Environment Variables\n(.env)"]
+    end
+    
+    WEB --> LB
+    MOBILE --> LB
+    LB --> API
+    API --> MW_CORS
+    API --> MW_BODY
+    API --> MW_STATIC
+    MW_STATIC --> STATIC
+    
+    API --> AUTH
+    API --> COMMUNITY
+    API --> PAYMENT
+    API --> COMPLAINT
+    API --> NOTIFICATION
+    
+    AUTH --> POOL
+    COMMUNITY --> POOL
+    PAYMENT --> POOL
+    COMPLAINT --> POOL
+    NOTIFICATION --> POOL
+    
+    COMMUNITY --> EMAIL
+    PAYMENT --> EMAIL
+    COMPLAINT --> EMAIL
+    AUTH --> EMAIL
+    
+    EMAIL --> QUEUE
+    QUEUE --> PROCESSOR
+    PROCESSOR --> SMTP
+    
+    POOL --> DB
+    EMAIL --> ENV
+    
+    classDef client fill:#e1f5fe,stroke:#01579b
+    classDef lb fill:#fff3e0,stroke:#e65100
+    classDef app fill:#f3e5f5,stroke:#4a148c
+    classDef data fill:#e8f5e8,stroke:#1b5e20
+    classDef external fill:#ffebee,stroke:#b71c1c
+    
+    class WEB,MOBILE client
+    class LB lb
+    class API,MW_CORS,MW_BODY,MW_STATIC,AUTH,COMMUNITY,PAYMENT,COMPLAINT,NOTIFICATION,EMAIL,QUEUE,PROCESSOR app
+    class DB,POOL,STATIC data
+    class SMTP,ENV external

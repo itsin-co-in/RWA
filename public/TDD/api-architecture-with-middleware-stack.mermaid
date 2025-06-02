@@ -1,0 +1,104 @@
+graph TD
+    subgraph "HTTP Request Flow"
+        REQ[HTTP Request] --> CORS[CORS Middleware]
+        CORS --> STATIC[Static File Middleware]
+        STATIC --> JSON[JSON Parser]
+        JSON --> BODY[Body Parser]
+        BODY --> ROUTER[Express Router]
+    end
+    
+    subgraph "Authentication Endpoints"
+        AUTH_SIGNUP["/signup POST"]
+        AUTH_LOGIN["/login POST"]
+        AUTH_ADMIN["/adminlogin POST"]
+        AUTH_RESET["/request-password-reset POST"]
+    end
+    
+    subgraph "Community Endpoints"
+        COMM_GET["/community GET"]
+        COMM_POST["/community POST"]
+        COMM_PUT["/community/:id PUT"]
+        COMM_DEL["/community/:id DELETE"]
+        COMM_COMMENTS_GET["/comments/:postId GET"]
+        COMM_COMMENTS_POST["/comments POST"]
+    end
+    
+    subgraph "User Management"
+        USER_PROFILE_GET["/profile/:userId GET"]
+        USER_PROFILE_PUT["/profile/update/:userId PUT"]
+        USER_NOTIF_GET["/notifications/:userId GET"]
+        USER_NOTIF_PUT["/notifications/:id/read PUT"]
+        USER_NOTIF_POST["/notifications/reply POST"]
+    end
+    
+    subgraph "Payment System"
+        PAY_USER_GET["/user/payments/:userId GET"]
+        PAY_PROCESS["/user/payments/process POST"]
+        PAY_HISTORY["/user/payments/history/:userId GET"]
+        PAY_STATS["/user/payments/stats/:userId GET"]
+        PAY_CATEGORY["/user/payments/category/:userId/:category GET"]
+    end
+    
+    subgraph "Complaint System"
+        COMP_USER_GET["/complaints/user/:userId GET"]
+        COMP_POST["/complaints POST"]
+        COMP_PUT["/complaints/:id PUT"]
+    end
+    
+    subgraph "Admin Panel"
+        ADMIN_USERS["/admin/users GET/POST/PUT/DELETE"]
+        ADMIN_PAYMENTS["/admin/payments GET/POST/PUT/DELETE"]
+        ADMIN_COMPLAINTS["/admin/complaints GET/PUT"]
+        ADMIN_STATS["/admin/dashboard-stats GET"]
+        ADMIN_PAY_SUMMARY["/admin/payments/summary GET"]
+        ADMIN_COMP_STATS["/admin/complaints/stats GET"]
+    end
+    
+    subgraph "Backend Services"
+        DB_SERVICE[(Database Service)]
+        EMAIL_SERVICE[Email Service]
+        QUEUE_SERVICE[Email Queue]
+        VALIDATION[Input Validation]
+        ERROR_HANDLER[Error Handler]
+    end
+    
+    ROUTER --> AUTH_SIGNUP
+    ROUTER --> AUTH_LOGIN
+    ROUTER --> COMM_GET
+    ROUTER --> COMM_POST
+    ROUTER --> USER_PROFILE_GET
+    ROUTER --> PAY_USER_GET
+    ROUTER --> COMP_POST
+    ROUTER --> ADMIN_USERS
+    
+    AUTH_SIGNUP --> VALIDATION
+    AUTH_LOGIN --> VALIDATION
+    COMM_POST --> VALIDATION
+    PAY_PROCESS --> VALIDATION
+    COMP_POST --> VALIDATION
+    
+    VALIDATION --> DB_SERVICE
+    DB_SERVICE --> EMAIL_SERVICE
+    EMAIL_SERVICE --> QUEUE_SERVICE
+    
+    VALIDATION --> ERROR_HANDLER
+    DB_SERVICE --> ERROR_HANDLER
+    EMAIL_SERVICE --> ERROR_HANDLER
+    
+    classDef middleware fill:#fff3e0
+    classDef auth fill:#ffebee
+    classDef community fill:#e8f5e8
+    classDef user fill:#e3f2fd
+    classDef payment fill:#f3e5f5
+    classDef complaint fill:#fce4ec
+    classDef admin fill:#f1f8e9
+    classDef service fill:#f5f5f5
+    
+    class REQ,CORS,STATIC,JSON,BODY,ROUTER,VALIDATION,ERROR_HANDLER middleware
+    class AUTH_SIGNUP,AUTH_LOGIN,AUTH_ADMIN,AUTH_RESET auth
+    class COMM_GET,COMM_POST,COMM_PUT,COMM_DEL,COMM_COMMENTS_GET,COMM_COMMENTS_POST community
+    class USER_PROFILE_GET,USER_PROFILE_PUT,USER_NOTIF_GET,USER_NOTIF_PUT,USER_NOTIF_POST user
+    class PAY_USER_GET,PAY_PROCESS,PAY_HISTORY,PAY_STATS,PAY_CATEGORY payment
+    class COMP_USER_GET,COMP_POST,COMP_PUT complaint
+    class ADMIN_USERS,ADMIN_PAYMENTS,ADMIN_COMPLAINTS,ADMIN_STATS,ADMIN_PAY_SUMMARY,ADMIN_COMP_STATS admin
+    class DB_SERVICE,EMAIL_SERVICE,QUEUE_SERVICE service

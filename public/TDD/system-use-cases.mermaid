@@ -1,0 +1,125 @@
+graph TB
+    subgraph "Actors"
+        USER[👤 Resident User]
+        ADMIN[👨‍💼 Admin]
+        SYSTEM[🤖 System]
+    end
+    
+    subgraph "Authentication Use Cases"
+        UC1[Register Account]
+        UC2[Login to System]
+        UC3[Reset Password]
+        UC4[Admin Login]
+    end
+    
+    subgraph "Community Use Cases"
+        UC5[View Community Posts]
+        UC6[Create Post]
+        UC7[Edit Own Post]
+        UC8[Delete Own Post]
+        UC9[Add Comment]
+        UC10[View Comments]
+    end
+    
+    subgraph "Profile Management"
+        UC11[View Profile]
+        UC12[Update Profile]
+        UC13[View Other Profiles]
+    end
+    
+    subgraph "Notification System"
+        UC14[View Notifications]
+        UC15[Mark as Read]
+        UC16[Send Reply]
+        UC17[Delete Notification]
+    end
+    
+    subgraph "Payment System"
+        UC18[View Payments]
+        UC19[Process Payment]
+        UC20[View Payment History]
+        UC21[View Payment Stats]
+        UC22[Create Payment - Admin]
+        UC23[Update Payment Status - Admin]
+    end
+    
+    subgraph "Complaint System"
+        UC24[Submit Complaint]
+        UC25[View My Complaints]
+        UC26[Update Complaint]
+        UC27[View All Complaints - Admin]
+        UC28[Update Complaint Status - Admin]
+    end
+    
+    subgraph "Admin Management"
+        UC29[Manage Users]
+        UC30[View Dashboard Stats]
+        UC31[Manage Payments]
+        UC32[Manage Complaints]
+    end
+    
+    subgraph "System Use Cases"
+        UC33[Send Email Notifications]
+        UC34[Process Email Queue]
+        UC35[Database Backup]
+        UC36[Log Activities]
+    end
+    
+    USER --> UC1
+    USER --> UC2
+    USER --> UC3
+    USER --> UC5
+    USER --> UC6
+    USER --> UC7
+    USER --> UC8
+    USER --> UC9
+    USER --> UC10
+    USER --> UC11
+    USER --> UC12
+    USER --> UC13
+    USER --> UC14
+    USER --> UC15
+    USER --> UC16
+    USER --> UC17
+    USER --> UC18
+    USER --> UC19
+    USER --> UC20
+    USER --> UC21
+    USER --> UC24
+    USER --> UC25
+    USER --> UC26
+    
+    ADMIN --> UC4
+    ADMIN --> UC22
+    ADMIN --> UC23
+    ADMIN --> UC27
+    ADMIN --> UC28
+    ADMIN --> UC29
+    ADMIN --> UC30
+    ADMIN --> UC31
+    ADMIN --> UC32
+    
+    SYSTEM --> UC33
+    SYSTEM --> UC34
+    SYSTEM --> UC35
+    SYSTEM --> UC36
+    
+    classDef actor fill:#e1f5fe
+    classDef auth fill:#ffebee
+    classDef community fill:#e8f5e8
+    classDef profile fill:#f3e5f5
+    classDef notification fill:#fff3e0
+    classDef payment fill:#e8eaf6
+    classDef complaint fill:#fce4ec
+    classDef admin fill:#f1f8e9
+    classDef system fill:#f5f5f5
+    
+    class USER,ADMIN,SYSTEM actor
+    class UC1,UC2,UC3,UC4 auth
+    class UC5,UC6,UC7,UC8,UC9,UC10 community
+    class UC11,UC12,UC13 profile
+    class UC14,UC15,UC16,UC17 notification
+    class UC18,UC19,UC20,UC21,UC22,UC23 payment
+    class UC24,UC25,UC26,UC27,UC28 complaint
+    class UC29,UC30,UC31,UC32 admin
+    class UC33,UC34,UC35,UC36 system

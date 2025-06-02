@@ -1,0 +1,56 @@
+graph TB
+    subgraph "Production Environment"
+        subgraph "Web Server (Node.js)"
+            APP["Express.js Application\nPort: 3000\nProcess: PM2"]
+            ENV["Environment Variables\n(.env file)"]
+        end
+        
+        subgraph "Database Server"
+            MYSQL["MySQL Server\nPort: 3306\nDatabase: realp_db"]
+            BACKUP["Database Backup\n(Scheduled)"]
+        end
+        
+        subgraph "Email Service"
+            GMAIL["Gmail SMTP\nPort: 465 (SSL)\nPool: Enabled"]
+        end
+        
+        subgraph "File System"
+            STATIC_FILES["Static Assets\n(HTML, CSS, JS)"]
+            LOGS["Application Logs\n(/var/log/app)"]
+        end
+        
+        subgraph "Network"
+            FIREWALL["Firewall\nPort 3000: Open\nPort 3306: Restricted"]
+            SSL["SSL Certificate\n(Optional)"]
+        end
+    end
+    
+    subgraph "External Dependencies"
+        INTERNET["Internet\n(Email Delivery)"]
+        DOMAIN["Domain Name\n(Optional)"]
+    end
+    
+    APP --> ENV
+    APP --> MYSQL
+    APP --> GMAIL
+    APP --> STATIC_FILES
+    APP --> LOGS
+    
+    MYSQL --> BACKUP
+    FIREWALL --> APP
+    SSL --> APP
+    
+    GMAIL --> INTERNET
+    APP --> DOMAIN
+    
+    classDef server fill:#e3f2fd
+    classDef database fill:#e8f5e8
+    classDef external fill:#fff3e0
+    classDef security fill:#ffebee
+    classDef storage fill:#f3e5f5
+    
+    class APP,ENV server
+    class MYSQL,BACKUP database
+    class GMAIL,INTERNET,DOMAIN external
+    class FIREWALL,SSL security
+    class STATIC_FILES,LOGS storage

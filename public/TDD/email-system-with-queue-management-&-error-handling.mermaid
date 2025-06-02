@@ -1,0 +1,63 @@
+graph TD
+    A[User Action Triggered] --> B{Requires Email?}
+    B -->|No| Z[End Process]
+    B -->|Yes| C[Create Email Task]
+    
+    C --> D[Add to Email Queue]
+    D --> E{Queue Processor Running?}
+    E -->|No| F[Start Queue Processor]
+    E -->|Yes| G[Task Queued]
+    
+    F --> H[Get Next Email Task]
+    G --> H
+    H --> I{Queue Empty?}
+    I -->|Yes| J[Stop Processor]
+    I -->|No| K[Process Email Task]
+    
+    K --> L[Create Mail Options]
+    L --> M[Send via Nodemailer]
+    M --> N{Send Successful?}
+    
+    N -->|Yes| O[Log Success]
+    N -->|No| P[Log Error]
+    
+    O --> Q[Resolve Promise]
+    P --> R[Reject Promise]
+    
+    Q --> S[Remove from Queue]
+    R --> S
+    S --> T{More Tasks?}
+    T -->|Yes| H
+    T -->|No| U[Set Processing Flag False]
+    U --> V[Schedule Next Check]
+    
+    subgraph "Email Types & Templates"
+        ET1["Welcome Email\n(User Registration)"]
+        ET2["Login Notification\n(Security Alert)"]
+        ET3["Post Notification\n(Community Activity)"]
+        ET4["Comment Notification\n(Engagement)"]
+        ET5["Payment Receipt\n(Transaction Confirmation)"]
+        ET6["Complaint Update\n(Status Change)"]
+        ET7["Password Reset\n(Security)"]
+        ET8["Admin Alerts\n(System Notifications)"]
+    end
+    
+    subgraph "Error Handling"
+        ERR1[Connection Timeout]
+        ERR2[Authentication Failed]
+        ERR3[Invalid Email Address]
+        ERR4[Rate Limit Exceeded]
+        ERR5[Server Unavailable]
+    end
+    
+    classDef process fill:#e3f2fd
+    classDef decision fill:#fff3e0
+    classDef success fill:#e8f5e8
+    classDef error fill:#ffebee
+    classDef email fill:#f3e5f5
+    
+    class A,C,D,F,H,K,L,M,O,Q,S,V process
+    class B,E,I,N,T decision
+    class O,Q success
+    class P,R,ERR1,ERR2,ERR3,ERR4,ERR5 error
+    class ET1,ET2,ET3,ET4,ET5,ET6,ET7,ET8 email

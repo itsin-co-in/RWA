@@ -1,0 +1,40 @@
+sequenceDiagram
+    participant U as User
+    participant API as Express API
+    participant DB as MySQL DB
+    participant EMAIL as Email Service
+    participant QUEUE as Email Queue
+    participant USERS as Other Users
+    
+    Note over U,USERS: Community Post Creation Flow
+    
+    U->>API: POST /community {user_id, username, title, category, message}
+    API->>API: Validate input data
+    API->>DB: INSERT INTO community_posts
+    DB-->>API: Post created (post_id)
+    API-->>U: 201 Created {post_id, message}
+    
+    Note over API,USERS: Async Notification Processing
+    
+    API->>API: process.nextTick() - Async processing
+    API->>DB: SELECT users WHERE id != user_id
+    DB-->>API: List of other users
+    
+    loop For each user
+        API->>DB: INSERT notification
+        API->>EMAIL: Queue email notification
+        EMAIL->>QUEUE: Add to email queue
+    end
+    
+    QUEUE->>QUEUE: Process email queue
+    
+    loop For each queued email
+        QUEUE->>EMAIL: Send email via Nodemailer
+        EMAIL-->>USERS: Email notification received
+    end
+    
+    Note over U,USERS: Real-time Updates
+    USERS->>API: GET /notifications/:userId
+    API->>DB: SELECT notifications
+    DB-->>API: User notifications
+    API-->>USERS: Notification list
