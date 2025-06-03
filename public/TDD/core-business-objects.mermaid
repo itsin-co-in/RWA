@@ -1,0 +1,52 @@
+graph TD
+    subgraph "User Management"
+        User["User<br/>- id: int<br/>- username: string<br/>- email: string<br/>- password: string<br/>+ login()<br/>+ register()<br/>+ updateProfile()"]
+        
+        UserProfile["UserProfile<br/>- user_id: int<br/>- full_name: string<br/>- phone: string<br/>- address: string<br/>+ create()<br/>+ update()"]
+        
+        Admin["Admin<br/>- email: string<br/>- password: string<br/>+ manageUsers()<br/>+ managePayments()<br/>+ manageComplaints()"]
+    end
+    
+    subgraph "Community Features"
+        CommunityPost["CommunityPost<br/>- id: int<br/>- user_id: int<br/>- title: string<br/>- category: string<br/>- message: string<br/>+ create()<br/>+ update()<br/>+ delete()"]
+        
+        Comment["Comment<br/>- id: int<br/>- post_id: int<br/>- user_id: int<br/>- comment: string<br/>+ create()<br/>+ notifyPostOwner()"]
+    end
+    
+    subgraph "Financial Management"
+        Payment["Payment<br/>- id: int<br/>- user_id: int<br/>- amount: decimal<br/>- category: string<br/>- status: string<br/>+ process()<br/>+ sendReceipt()"]
+    end
+    
+    subgraph "Issue Management"
+        Complaint["Complaint<br/>- id: int<br/>- user_id: int<br/>- title: string<br/>- status: string<br/>+ submit()<br/>+ updateStatus()"]
+    end
+    
+    subgraph "Communication"
+        Notification["Notification<br/>- id: int<br/>- receiver_id: int<br/>- message: string<br/>- read_status: int<br/>+ create()<br/>+ markAsRead()"]
+        
+        EmailService["EmailService<br/>- transporter: object<br/>- emailQueue: array<br/>+ sendEmail()<br/>+ processQueue()"]
+    end
+    
+    User --> UserProfile
+    User --> CommunityPost
+    User --> Comment
+    User --> Payment
+    User --> Complaint
+    User --> Notification
+    CommunityPost --> Comment
+    EmailService --> User
+    EmailService --> Payment
+    EmailService --> Complaint
+    Admin --> User
+    
+    classDef userClass fill:#e3f2fd
+    classDef communityClass fill:#e8f5e8
+    classDef financialClass fill:#fff3e0
+    classDef issueClass fill:#ffebee
+    classDef commClass fill:#f3e5f5
+    
+    class User,UserProfile,Admin userClass
+    class CommunityPost,Comment communityClass
+    class Payment financialClass
+    class Complaint issueClass
+    class Notification,EmailService commClass
