@@ -27,6 +27,8 @@ This project is ideal for residential societies, gated communities, or any housi
 - **Database:** MySQL
 - **Real-Time Notifications:** Socket.io (optional for real-time updates)
 - **Email Sending:** Nodemailer for email communication
+- **WhatsApp Integration:** CSV data export import scripts. Or API integration whatever is feseble.
+- **MyGate Integration:** CSV data export import scripts. Or API integration whatever is feseble.
 
 ## Installation
 
