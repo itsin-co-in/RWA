@@ -38,9 +38,16 @@ To run this application locally, you'll need the following installed:
 
 - **Node.js**: To run the backend.
 - **MySQL**: For the database.
+- **phpMyAdmin**: For database management.
 - **Postman** (optional): For testing APIs.
 - **Email Account:** Set up an email account for Nodemailer to send emails (e.g., Gmail, SMTP server).
 
 ### DIYs
+
+The access URLs:
+
+App: UI http://its-rwams.ddev.site:5050/
+
+phpMyAdmin UI: http://its-rwams.ddev.site:8036/
 
 
