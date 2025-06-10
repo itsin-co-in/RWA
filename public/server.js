@@ -234,7 +234,7 @@ app.post('/community', async (req, res) => {
                         <h1>New Community Post: ${title}</h1>
                         <p>${username} has posted in the ${category} category:</p>
                         <blockquote>${message}</blockquote>
-                        <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/community" 
+                        <a href="${process.env.FRONTEND_URL || 'http://localhost:5050'}/community" 
                            style="display: inline-block; padding: 10px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
                             View Post
                         </a>
@@ -344,7 +344,7 @@ app.post("/comments", async (req, res) => {
                         <h1>New Comment on Your Post</h1>
                         <p>${username} commented on your post "${postTitle}":</p>
                         <blockquote>${comment}</blockquote>
-                        <a href="${process.env.FRONTEND_URL || 'http://localhost:3000'}/community/${post_id}" 
+                        <a href="${process.env.FRONTEND_URL || 'http://localhost:5050'}/community/${post_id}" 
                            style="display: inline-block; padding: 10px 15px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px;">
                             View Comment
                         </a>
@@ -1418,7 +1418,7 @@ app.get("/admin/complaints/stats", async (req, res) => {
 // [Include all your other existing routes exactly as you have them...]
 
 // ✅ Start Server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5050;
 
 // Get local IP for development
 const getLocalIp = () => {
