@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node public/server.js",
-    "stop": "killall node"
+    "stop": "ps aux | grep 'node public/server.js' | grep -v grep | awk '{print $2}' | xargs kill -9 || true",
+    "restart": "npm run stop && sleep 1 && npm run start"
   },
   "repository": {
     "type": "git",
